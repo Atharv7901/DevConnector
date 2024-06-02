@@ -3,6 +3,8 @@ const router = express.Router();
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const {check, validationResult} = require("express-validator");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 
 const User = require("../../models/User");
 
@@ -17,7 +19,6 @@ router.post(
     check("password", "Enter password of 6 characters").isLength({min: 6}),
   ],
   async (req, res) => {
-    console.log("this is the request", req.body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({errors: errors.array()});
@@ -55,8 +56,21 @@ router.post(
       await user.save();
 
       // return JWT
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
 
-      res.send("Successfully created the user");
+      jwt.sign(
+        payload,
+        config.get("jwtToken"),
+        {expiresIn: 36000},
+        (err, token) => {
+          if (err) throw err;
+          res.json({token});
+        }
+      );
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Internal server error");

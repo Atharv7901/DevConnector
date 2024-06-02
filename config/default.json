@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://atharvshivarkar:atharvshivarkar@cluster0.bz8fe1e.mongodb.net/test?retryWrites=true"
+  "mongoURI": "mongodb+srv://atharvshivarkar:atharvshivarkar@cluster0.bz8fe1e.mongodb.net/test?retryWrites=true",
+  "jwtToken": "atharvIsBest"
 }
