@@ -39,4 +39,17 @@ router.post(
   }
 );
 
+//@route GET /api/posts
+//@desc Get all the posts
+//@access Private
+router.get("/", auth, async (req, res) => {
+  try {
+    const posts = await Post.find().sort({date: -1});
+    res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).send("Internal server error");
+  }
+});
+
 module.exports = router;
