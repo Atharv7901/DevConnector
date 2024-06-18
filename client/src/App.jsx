@@ -5,23 +5,27 @@ import Navbar from "../src/components/layout/Navbar";
 import Landing from "../src/components/layout/Landing";
 import Login from "../src/components/auth/Login";
 import Register from "../src/components/auth/Register";
+import {Provider} from "react-redux";
+import {store} from "./store/store";
 
 const App = () => {
   return (
-    <Router>
-      <Fragment>
-        <Navbar />
-        <Routes>
-          <Route exact path="/" Component={Landing} />
-        </Routes>
-        <section className="container">
+    <Provider store={store}>
+      <Router>
+        <Fragment>
+          <Navbar />
           <Routes>
-            <Route exact path="/login" Component={Login} />
-            <Route exact path="/register" Component={Register} />
+            <Route exact path="/" Component={Landing} />
           </Routes>
-        </section>
-      </Fragment>
-    </Router>
+          <section className="container">
+            <Routes>
+              <Route exact path="/login" Component={Login} />
+              <Route exact path="/register" Component={Register} />
+            </Routes>
+          </section>
+        </Fragment>
+      </Router>
+    </Provider>
   );
 };
 
