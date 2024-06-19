@@ -1,7 +1,9 @@
-import {Fragment, useState} from "react";
+import {Fragment, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {setAlert} from "../../features/alerts/alert";
+import {useRegisterUserMutation} from "../../services/auth/authService";
+import {registerSuccess, registerFail} from "../../features/auth/auth";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -19,13 +21,23 @@ const Register = () => {
     setFormData({...formData, [e.target.name]: e.target.value});
   };
 
+  const [registerUser, responseRegisterUser] = useRegisterUserMutation();
+
+  useEffect(() => {
+    if (responseRegisterUser.isSuccess) {
+      dispatch(registerSuccess({token: responseRegisterUser?.data?.token}));
+    } else {
+      dispatch(registerFail());
+      console.log(responseRegisterUser);
+    }
+  }, [responseRegisterUser]);
+
   const onRegister = (e) => {
     e.preventDefault();
     if (password !== password2) {
-      console.log("Passwords do not match!");
       dispatch(setAlert({msg: "Passwords do not match!", alertType: "danger"}));
     } else {
-      console.log("form data", formData);
+      registerUser({name, email, password});
     }
   };
 
@@ -44,7 +56,7 @@ const Register = () => {
             name="name"
             value={name}
             onChange={(e) => handleFormDataChange(e)}
-            required
+            // required
           />
         </div>
         <div className="form-group">
@@ -67,7 +79,7 @@ const Register = () => {
             name="password"
             value={password}
             onChange={(e) => handleFormDataChange(e)}
-            minLength={6}
+            // minLength={6}
           />
         </div>
         <div className="form-group">
@@ -77,7 +89,7 @@ const Register = () => {
             name="password2"
             value={password2}
             onChange={(e) => handleFormDataChange(e)}
-            minLength={6}
+            // minLength={6}
           />
         </div>
         <input type="submit" className="btn btn-primary" value="Register" />
