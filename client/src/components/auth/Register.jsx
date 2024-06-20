@@ -2,8 +2,15 @@ import {Fragment, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {setAlert} from "../../features/alerts/alert";
-import {useRegisterUserMutation} from "../../services/auth/authService";
-import {registerSuccess, registerFail} from "../../features/auth/auth";
+import {
+  useRegisterUserMutation,
+  useLoadUserQuery,
+} from "../../services/auth/authService";
+import {
+  registerSuccess,
+  registerFail,
+  userLoaded,
+} from "../../features/auth/auth";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +21,9 @@ const Register = () => {
   });
 
   const dispatch = useDispatch();
+  const [skipLoadUser, setSkipLoadUser] = useState(true);
+
+  const userData = useLoadUserQuery({}, {skip: skipLoadUser});
 
   const {name, email, password, password2} = formData;
 
@@ -26,11 +36,23 @@ const Register = () => {
   useEffect(() => {
     if (responseRegisterUser.isSuccess) {
       dispatch(registerSuccess({token: responseRegisterUser?.data?.token}));
-    } else {
+      setSkipLoadUser(false);
+    } else if (responseRegisterUser.isError) {
       dispatch(registerFail());
       console.log(responseRegisterUser);
+      if (responseRegisterUser.error) {
+        responseRegisterUser.error.data.errors.map((value, index) => {
+          dispatch(setAlert({msg: value.msg, alertType: "danger"}));
+        });
+      }
     }
   }, [responseRegisterUser]);
+
+  useEffect(() => {
+    if (userData.isSuccess) {
+      dispatch(userLoaded(userData.data));
+    }
+  }, [userData]);
 
   const onRegister = (e) => {
     e.preventDefault();
