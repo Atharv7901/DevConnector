@@ -7,7 +7,7 @@ const Alert = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (alertData.length > 0) {
+    if (alertData && alertData.length > 0) {
       const latestAlert = alertData[alertData.length - 1];
       const timer = setTimeout(() => {
         dispatch(removeAlert(latestAlert.id));
@@ -19,7 +19,7 @@ const Alert = () => {
 
   return (
     <>
-      {alertData.length > 0 &&
+      {alertData && alertData.length > 0 &&
         alertData.map((alert) => (
           <div key={alert.id} className={`alert alert-${alert.alertType}`}>
             {alert.msg}
