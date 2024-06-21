@@ -1,6 +1,6 @@
 import {Fragment, useEffect, useState} from "react";
-import {Link} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {Link, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import {setAlert} from "../../features/alerts/alert";
 import {
   useRegisterUserMutation,
@@ -27,6 +27,10 @@ const Register = () => {
 
   const {name, email, password, password2} = formData;
 
+  const navigate = useNavigate();
+
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   const handleFormDataChange = (e) => {
     setFormData({...formData, [e.target.name]: e.target.value});
   };
@@ -51,6 +55,7 @@ const Register = () => {
   useEffect(() => {
     if (userData.isSuccess) {
       dispatch(userLoaded(userData.data));
+      navigate("/dashboard");
     }
   }, [userData]);
 
@@ -62,6 +67,12 @@ const Register = () => {
       registerUser({name, email, password});
     }
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, []);
 
   return (
     <Fragment>

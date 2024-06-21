@@ -1,12 +1,12 @@
 import {Fragment, useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, redirect, useNavigate} from "react-router-dom";
 import {
   useLoginUserMutation,
   useLoadUserQuery,
 } from "../../services/auth/authService";
 import {setAlert} from "../../features/alerts/alert";
 import {loginSuccess, loginFail, userLoaded} from "../../features/auth/auth";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +15,9 @@ const Login = () => {
   });
   const [skipLoadUser, setSkipLoadUser] = useState(true);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const [loginUser, responseLoginUser] = useLoginUserMutation();
   const userData = useLoadUserQuery({}, {skip: skipLoadUser});
@@ -48,8 +51,15 @@ const Login = () => {
   useEffect(() => {
     if (userData.isSuccess) {
       dispatch(userLoaded(userData.data));
+      navigate("/dashboard");
     }
   }, [userData]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, []);
 
   return (
     <Fragment>
