@@ -1,11 +1,23 @@
-import {Fragment, useState} from "react";
+import {Fragment, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
+import {
+  useLoginUserMutation,
+  useLoadUserQuery,
+} from "../../services/auth/authService";
+import {setAlert} from "../../features/alerts/alert";
+import {loginSuccess, loginFail, userLoaded} from "../../features/auth/auth";
+import {useDispatch} from "react-redux";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [skipLoadUser, setSkipLoadUser] = useState(true);
+  const dispatch = useDispatch();
+
+  const [loginUser, responseLoginUser] = useLoginUserMutation();
+  const userData = useLoadUserQuery({}, {skip: skipLoadUser});
 
   const {email, password} = formData;
 
@@ -16,7 +28,28 @@ const Login = () => {
   const onLogin = (e) => {
     e.preventDefault();
     console.log("Logged in user", formData);
+    loginUser(formData);
   };
+
+  useEffect(() => {
+    if (responseLoginUser.isSuccess) {
+      dispatch(loginSuccess({token: responseLoginUser.data.token}));
+      setSkipLoadUser(false);
+    } else if (responseLoginUser.isError) {
+      dispatch(loginFail());
+      if (responseLoginUser.error) {
+        responseLoginUser.error.data.errors.map((value, index) => {
+          dispatch(setAlert({msg: value.msg, alertType: "danger"}));
+        });
+      }
+    }
+  }, [responseLoginUser]);
+
+  useEffect(() => {
+    if (userData.isSuccess) {
+      dispatch(userLoaded(userData.data));
+    }
+  }, [userData]);
 
   return (
     <Fragment>

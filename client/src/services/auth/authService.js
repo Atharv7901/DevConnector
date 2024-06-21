@@ -29,7 +29,15 @@ export const authApi = createApi({
         method: "GET",
       }),
     }),
+    loginUser: builder.mutation({
+      query: (data) => ({
+        url: "/auth",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const {useRegisterUserMutation, useLoadUserQuery} = authApi;
+export const {useRegisterUserMutation, useLoadUserQuery, useLoginUserMutation} =
+  authApi;
