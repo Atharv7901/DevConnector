@@ -9,6 +9,8 @@ import Register from "../src/components/auth/Register";
 import {Provider} from "react-redux";
 import {store, persistor} from "./store/store";
 import Alert from "./components/layout/Alert";
+import Dashboard from "./components/dashboard/Dashboard";
+import PrivateRoute from "./components/routing/PrivateRoute";
 
 const App = () => {
   return (
@@ -25,6 +27,9 @@ const App = () => {
               <Routes>
                 <Route exact path="/login" Component={Login} />
                 <Route exact path="/register" Component={Register} />
+                <Route Component={PrivateRoute}>
+                  <Route exact path="/dashboard" Component={Dashboard} />
+                </Route>
               </Routes>
             </section>
           </Fragment>
