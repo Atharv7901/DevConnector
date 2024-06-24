@@ -49,17 +49,25 @@ const Login = () => {
   }, [responseLoginUser]);
 
   useEffect(() => {
-    if (userData.isSuccess) {
-      dispatch(userLoaded(userData.data));
-      navigate("/dashboard");
-    }
-  }, [userData]);
-
-  useEffect(() => {
     if (isAuthenticated) {
       navigate("/dashboard");
     }
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated && !skipLoadUser) {
+      userData.refetch().then((result) => {
+        if (result.isSuccess) {
+          console.log("inside dispatch", result.data);
+          dispatch(userLoaded(result.data));
+          navigate("/dashboard");
+        } else if (result.isError) {
+          // Handle error if needed
+          console.error("Failed to refetch user data:", result.error);
+        }
+      });
+    }
+  }, [skipLoadUser]);
 
   return (
     <Fragment>

@@ -51,13 +51,20 @@ const Register = () => {
       }
     }
   }, [responseRegisterUser]);
-
   useEffect(() => {
-    if (userData.isSuccess) {
-      dispatch(userLoaded(userData.data));
-      navigate("/dashboard");
+    if (isAuthenticated && !skipLoadUser) {
+      userData.refetch().then((result) => {
+        if (result.isSuccess) {
+          console.log("inside dispatch", result.data);
+          dispatch(userLoaded(result.data));
+          navigate("/dashboard");
+        } else if (result.isError) {
+          // Handle error if needed
+          console.error("Failed to refetch user data:", result.error);
+        }
+      });
     }
-  }, [userData]);
+  }, [skipLoadUser]);
 
   const onRegister = (e) => {
     e.preventDefault();
