@@ -2,6 +2,7 @@ import React, {Fragment} from "react";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../../features/auth/auth";
+import {clearProfile} from "../../features/profile/profile";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,13 @@ const Navbar = () => {
         </Link>
       </li>
       <li>
-        <Link onClick={() => dispatch(logout())} href="#!">
+        <Link
+          onClick={() => {
+            dispatch(clearProfile());
+            dispatch(logout());
+          }}
+          href="#!"
+        >
           <i className="fas fa-sign-out-alt"></i>{" "}
           <span className="hide-sm">Logout</span>
         </Link>

@@ -20,9 +20,15 @@ const profileSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    clearProfile: (state, action) => {
+      state.profile = null;
+      state.repos = [];
+      state.loading = false;
+      state.error = {};
+    },
   },
 });
 
-export const {getProfile, profileError} = profileSlice.actions;
+export const {getProfile, profileError, clearProfile} = profileSlice.actions;
 
 export default profileSlice.reducer;
