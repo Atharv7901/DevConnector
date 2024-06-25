@@ -3,7 +3,7 @@ import {useCreateProfileMutation} from "../../services/profile/profileService";
 import {useDispatch} from "react-redux";
 import {setAlert} from "../../features/alerts/alert";
 import {getProfile} from "../../features/profile/profile";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 
 const CreateProfile = () => {
   const [showSocialInputs, setShowSocialInputs] = useState(false);
@@ -230,9 +230,9 @@ const CreateProfile = () => {
         )}
 
         <input type="submit" className="btn btn-primary my-1" />
-        <a className="btn btn-light my-1" href="/dashboard">
+        <Link className="btn btn-light my-1" to="/dashboard">
           Go back
-        </a>
+        </Link>
       </form>
     </Fragment>
   );
