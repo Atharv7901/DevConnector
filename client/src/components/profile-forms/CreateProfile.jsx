@@ -1,7 +1,15 @@
-import {Fragment, useState} from "react";
+import {Fragment, useEffect, useState} from "react";
+import {useCreateProfileMutation} from "../../services/profile/profileService";
+import {useDispatch} from "react-redux";
+import {setAlert} from "../../features/alerts/alert";
+import {getProfile} from "../../features/profile/profile";
+import {useNavigate} from "react-router-dom";
 
 const CreateProfile = () => {
   const [showSocialInputs, setShowSocialInputs] = useState(false);
+  const [createProfile, responseCreateProfile] = useCreateProfileMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     company: "",
     website: "",
@@ -36,6 +44,25 @@ const CreateProfile = () => {
     setFormData({...formData, [e.target.name]: e.target.value});
   };
 
+  useEffect(() => {
+    if (responseCreateProfile.isSuccess) {
+      dispatch(getProfile(responseCreateProfile.data.data));
+      dispatch(
+        setAlert({msg: "Created Profile Successfully!", alertType: "success"})
+      );
+      navigate("/dashboard");
+    } else if (responseCreateProfile.isError) {
+      responseCreateProfile.error.data.errors.map((value, index) => {
+        dispatch(setAlert({msg: value.msg, alertType: "danger"}));
+      });
+    }
+  }, [responseCreateProfile]);
+
+  const submitData = (e) => {
+    e.preventDefault();
+    console.log("eee", formData);
+    createProfile(formData);
+  };
   return (
     <Fragment>
       <h1 className="large text-primary">Create Profile</h1>
@@ -44,7 +71,7 @@ const CreateProfile = () => {
         profile stand out
       </p>
       <small>* = required field</small>
-      <form className="form">
+      <form className="form" onSubmit={(e) => submitData(e)}>
         <div className="form-group">
           <select
             name="status"
@@ -76,6 +103,16 @@ const CreateProfile = () => {
           <small className="form-text">
             Could be your own company or one you work for
           </small>
+        </div>
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Website"
+            name="website"
+            value={website}
+            onChange={(e) => handleChange(e)}
+          />
+          <small className="form-test">Enter ur personal website</small>
         </div>
         <div className="form-group">
           <input

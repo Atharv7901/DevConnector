@@ -22,7 +22,18 @@ export const profileApi = createApi({
         method: "GET",
       }),
     }),
+    createProfile: builder.mutation({
+      query: (data) => ({
+        url: "/profile",
+        method: "POST",
+        body: data,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    }),
   }),
 });
 
-export const {useGetLoggedInProfileQuery} = profileApi;
+export const {useGetLoggedInProfileQuery, useCreateProfileMutation} =
+  profileApi;
