@@ -4,6 +4,7 @@ import {Fragment, useEffect, useState} from "react";
 import {getProfile, profileError} from "../../features/profile/profile";
 import Spinner from "../layout/Spinner";
 import {Link} from "react-router-dom";
+import DashboardActions from "./DashboardActions";
 
 const Dashboard = () => {
   const [skipUser, setSkipUser] = useState(true);
@@ -40,7 +41,9 @@ const Dashboard = () => {
         <i className="fas fa-user" /> Welcome {user && user.name}
       </p>
       {profile !== null ? (
-        <Fragment>Has</Fragment>
+        <Fragment>
+          <DashboardActions />
+        </Fragment>
       ) : (
         <Fragment>
           <p>You have not setup a profile yet, please add some info</p>
