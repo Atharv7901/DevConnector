@@ -11,6 +11,7 @@ import {store, persistor} from "./store/store";
 import Alert from "./components/layout/Alert";
 import Dashboard from "./components/dashboard/Dashboard";
 import PrivateRoute from "./components/routing/PrivateRoute";
+import CreateProfile from "./components/profile-forms/CreateProfile";
 
 const App = () => {
   return (
@@ -29,6 +30,11 @@ const App = () => {
                 <Route exact path="/register" Component={Register} />
                 <Route Component={PrivateRoute}>
                   <Route exact path="/dashboard" Component={Dashboard} />
+                  <Route
+                    exact
+                    path="/create-profile"
+                    Component={CreateProfile}
+                  />
                 </Route>
               </Routes>
             </section>
