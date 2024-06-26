@@ -13,6 +13,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import CreateProfile from "./components/profile-forms/CreateProfile";
 import EditProfile from "./components/profile-forms/EditProfile";
+import AddExperience from "./components/profile-forms/AddExperience";
 
 const App = () => {
   return (
@@ -37,6 +38,11 @@ const App = () => {
                     Component={CreateProfile}
                   />
                   <Route exact path="/edit-profile" Component={EditProfile} />
+                  <Route
+                    exact
+                    path="/add-experience"
+                    Component={AddExperience}
+                  />
                 </Route>
               </Routes>
             </section>

@@ -32,8 +32,21 @@ export const profileApi = createApi({
         },
       }),
     }),
+    addExperience: builder.mutation({
+      query: (data) => ({
+        url: "/profile/experience",
+        method: "PUT",
+        body: data,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    }),
   }),
 });
 
-export const {useGetLoggedInProfileQuery, useCreateProfileMutation} =
-  profileApi;
+export const {
+  useGetLoggedInProfileQuery,
+  useCreateProfileMutation,
+  useAddExperienceMutation,
+} = profileApi;
