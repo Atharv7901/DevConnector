@@ -23,7 +23,6 @@ const Experience = (props) => {
     ));
   return (
     <Fragment>
-      {console.log("props", props)}
       <h2 className="my-2">Experience</h2>
       <table className="table">
         <thead>
