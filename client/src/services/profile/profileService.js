@@ -42,6 +42,16 @@ export const profileApi = createApi({
         },
       }),
     }),
+    addEducation: builder.mutation({
+      query: (data) => ({
+        url: "/profile/education",
+        method: "PUT",
+        body: data,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    }),
   }),
 });
 
@@ -49,4 +59,5 @@ export const {
   useGetLoggedInProfileQuery,
   useCreateProfileMutation,
   useAddExperienceMutation,
+  useAddEducationMutation,
 } = profileApi;

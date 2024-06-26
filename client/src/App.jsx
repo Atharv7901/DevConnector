@@ -14,6 +14,7 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 import CreateProfile from "./components/profile-forms/CreateProfile";
 import EditProfile from "./components/profile-forms/EditProfile";
 import AddExperience from "./components/profile-forms/AddExperience";
+import AddEducation from "./components/profile-forms/AddEducation";
 
 const App = () => {
   return (
@@ -43,6 +44,7 @@ const App = () => {
                     path="/add-experience"
                     Component={AddExperience}
                   />
+                  <Route exact path="/add-education" Component={AddEducation} />
                 </Route>
               </Routes>
             </section>
