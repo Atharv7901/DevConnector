@@ -1,7 +1,25 @@
-import {Fragment} from "react";
+import {Fragment, useEffect} from "react";
 import Moment from "react-moment";
+import {useDeleteExperienceMutation} from "../../services/profile/profileService";
+import {useDispatch} from "react-redux";
+import {updateProfile} from "../../features/profile/profile";
+import {setAlert} from "../../features/alerts/alert";
 
 const Experience = (props) => {
+  const [deleteExperience, responseDeleteExperience] =
+    useDeleteExperienceMutation();
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (responseDeleteExperience.isSuccess) {
+      dispatch(updateProfile(responseDeleteExperience.data));
+      dispatch(setAlert({msg: "Deleted Experience!", alertType: "success"}));
+    } else if (responseDeleteExperience.isError) {
+      responseDeleteExperience.error.data.errors.map((value, index) => {
+        dispatch(setAlert({msg: value.msg, alertType: "danger"}));
+      });
+    }
+  }, [responseDeleteExperience]);
   const experiences =
     props.experience &&
     props.experience.map((exp) => (
@@ -17,7 +35,12 @@ const Experience = (props) => {
           )}
         </td>
         <td>
-          <button className="btn btn-danger">Delete</button>
+          <button
+            className="btn btn-danger"
+            onClick={() => deleteExperience({id: exp._id})}
+          >
+            Delete
+          </button>
         </td>
       </tr>
     ));
