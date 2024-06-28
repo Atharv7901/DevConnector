@@ -1,12 +1,19 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useGetLoggedInProfileQuery} from "../../services/profile/profileService";
 import {Fragment, useEffect, useState} from "react";
-import {getProfile, profileError} from "../../features/profile/profile";
+import {
+  clearProfile,
+  getProfile,
+  profileError,
+} from "../../features/profile/profile";
 import Spinner from "../layout/Spinner";
 import {Link} from "react-router-dom";
 import DashboardActions from "./DashboardActions";
 import Experience from "./Experience";
 import Education from "./Education";
+import {useDeleteAccountMutation} from "../../services/profile/profileService";
+import {logout} from "../../features/auth/auth";
+import {setAlert} from "../../features/alerts/alert";
 
 const Dashboard = () => {
   const [skipUser, setSkipUser] = useState(true);
@@ -34,6 +41,23 @@ const Dashboard = () => {
     }
   }, [skipUser]);
 
+  //delete account
+  const [deleteAccount, responseDeleteAccount] = useDeleteAccountMutation();
+
+  useEffect(() => {
+    if (responseDeleteAccount.isSuccess) {
+      dispatch(clearProfile());
+      dispatch(logout());
+      dispatch(
+        setAlert({msg: "Account deleted permenantly!", alertType: "danger"})
+      );
+    } else if (responseDeleteAccount.isError) {
+      responseDeleteAccount.error.data.errors.map((value, index) => {
+        dispatch(setAlert({msg: value.msg, alertType: "danger"}));
+      });
+    }
+  }, [responseDeleteAccount]);
+
   return loading && profile === null ? (
     <Spinner />
   ) : (
@@ -47,6 +71,12 @@ const Dashboard = () => {
           <DashboardActions />
           <Experience experience={profile.experience} />
           <Education education={profile.education} />
+
+          <div className="my-2">
+            <button className="btn btn-danger" onClick={() => deleteAccount()}>
+              <i className="fas fa-user-minus"></i> Delete My Account
+            </button>
+          </div>
         </Fragment>
       ) : (
         <Fragment>
