@@ -1,7 +1,26 @@
-import {Fragment} from "react";
+import {Fragment, useEffect} from "react";
 import Moment from "react-moment";
+import {useDeleteEducationMutation} from "../../services/profile/profileService";
+import {useDispatch} from "react-redux";
+import {updateProfile} from "../../features/profile/profile";
+import {setAlert} from "../../features/alerts/alert";
 
 const Education = (props) => {
+  const [deleteEducation, responseDeleteEducation] =
+    useDeleteEducationMutation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (responseDeleteEducation.isSuccess) {
+      dispatch(updateProfile(responseDeleteEducation.data));
+      dispatch(setAlert({msg: "Deleted Education!", alertType: "success"}));
+    } else if (responseDeleteEducation.isError) {
+      responseDeleteEducation.error.data.errors.map((value, index) => {
+        dispatch(setAlert({msg: value.msg, alertType: "danger"}));
+      });
+    }
+  }, [responseDeleteEducation]);
+
   const educations =
     props.education &&
     props.education.map((edu) => (
@@ -17,7 +36,12 @@ const Education = (props) => {
           )}
         </td>
         <td>
-          <button className="btn btn-danger">Delete</button>
+          <button
+            className="btn btn-danger"
+            onClick={() => deleteEducation({id: edu._id})}
+          >
+            Delete
+          </button>
         </td>
       </tr>
     ));
