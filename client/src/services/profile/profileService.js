@@ -52,6 +52,24 @@ export const profileApi = createApi({
         },
       }),
     }),
+    deleteExperience: builder.mutation({
+      query: (data) => ({
+        url: `/profile/experience/${data.id}`,
+        method: "DELETE",
+      }),
+    }),
+    deleteEducation: builder.mutation({
+      query: (data) => ({
+        url: `/profile/education/${data.id}`,
+        method: "DELETE",
+      }),
+    }),
+    deleteAccount: builder.mutation({
+      query: (data) => ({
+        url: "/profile",
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -60,4 +78,7 @@ export const {
   useCreateProfileMutation,
   useAddExperienceMutation,
   useAddEducationMutation,
+  useDeleteEducationMutation,
+  useDeleteExperienceMutation,
+  useDeleteAccountMutation,
 } = profileApi;
