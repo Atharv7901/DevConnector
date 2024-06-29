@@ -82,6 +82,12 @@ export const profileApi = createApi({
         method: "GET",
       }),
     }),
+    getGithubRepos: builder.query({
+      query: (data) => ({
+        url: `/profile/github/${data.username}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -95,4 +101,5 @@ export const {
   useDeleteAccountMutation,
   useGetAllProfilesQuery,
   useGetProfileByIDQuery,
+  useGetGithubReposQuery,
 } = profileApi;

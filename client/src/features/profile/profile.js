@@ -34,6 +34,10 @@ const profileSlice = createSlice({
       state.profiles = action.payload;
       state.loading = false;
     },
+    getRepos: (state, action) => {
+      state.repos = action.payload;
+      state.loading = false;
+    },
   },
 });
 
@@ -43,6 +47,7 @@ export const {
   clearProfile,
   updateProfile,
   getProfiles,
+  getRepos,
 } = profileSlice.actions;
 
 export default profileSlice.reducer;
