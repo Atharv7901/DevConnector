@@ -76,6 +76,12 @@ export const profileApi = createApi({
         method: "GET",
       }),
     }),
+    getProfileByID: builder.query({
+      query: (data) => ({
+        url: `/profile/user/${data.userID}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -88,4 +94,5 @@ export const {
   useDeleteExperienceMutation,
   useDeleteAccountMutation,
   useGetAllProfilesQuery,
+  useGetProfileByIDQuery,
 } = profileApi;
