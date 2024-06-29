@@ -70,6 +70,12 @@ export const profileApi = createApi({
         method: "DELETE",
       }),
     }),
+    getAllProfiles: builder.query({
+      query: (data) => ({
+        url: "/profile",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -81,4 +87,5 @@ export const {
   useDeleteEducationMutation,
   useDeleteExperienceMutation,
   useDeleteAccountMutation,
+  useGetAllProfilesQuery,
 } = profileApi;
