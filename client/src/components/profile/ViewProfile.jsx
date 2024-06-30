@@ -6,6 +6,7 @@ import {getViewProfile} from "../../features/profile/profile";
 import Spinner from "../layout/Spinner";
 import ProfileTop from "./ProfileTop";
 import ProfileAbout from "./ProfileAbout";
+import ProfileExperience from "./ProfileExperience";
 
 const ViewProfile = (props) => {
   const {id} = useParams();
@@ -39,6 +40,21 @@ const ViewProfile = (props) => {
           <div className="profile-grid my-1">
             <ProfileTop profile={viewProfile} />
             <ProfileAbout profile={viewProfile} />
+            <div className="profile-exp bg-white p-2">
+              <h2 className="text-primary">Experience</h2>
+              {viewProfile.experience.length > 0 ? (
+                <Fragment>
+                  {viewProfile.experience.map((experience) => (
+                    <ProfileExperience
+                      key={experience._id}
+                      experience={experience}
+                    />
+                  ))}
+                </Fragment>
+              ) : (
+                <h4>No Experience Found</h4>
+              )}
+            </div>
           </div>
         </Fragment>
       )}
