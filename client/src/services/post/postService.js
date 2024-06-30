@@ -22,7 +22,22 @@ export const postApi = createApi({
         method: "GET",
       }),
     }),
+    addLike: builder.mutation({
+      query: (data) => ({
+        url: `/posts/like/${data.postID}`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
+    removeLikes: builder.mutation({
+      query: (data) => ({
+        url: `/posts/unlike/${data.postID}`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const {useGetAllPostsQuery} = postApi;
+export const {useGetAllPostsQuery, useAddLikeMutation, useRemoveLikesMutation} =
+  postApi;
