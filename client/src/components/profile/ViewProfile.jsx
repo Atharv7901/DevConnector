@@ -15,7 +15,6 @@ const ViewProfile = (props) => {
 
   useEffect(() => {
     if (currentProfile.isSuccess) {
-      console.log(currentProfile);
       dispatch(getViewProfile(currentProfile.data));
     }
   }, [currentProfile]);
