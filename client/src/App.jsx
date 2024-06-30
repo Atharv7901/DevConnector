@@ -17,6 +17,7 @@ import AddExperience from "./components/profile-forms/AddExperience";
 import AddEducation from "./components/profile-forms/AddEducation";
 import Profile from "./components/profiles/Profile";
 import ViewProfile from "./components/profile/ViewProfile";
+import Posts from "./components/posts/Posts";
 
 const App = () => {
   return (
@@ -49,6 +50,7 @@ const App = () => {
                     Component={AddExperience}
                   />
                   <Route exact path="/add-education" Component={AddEducation} />
+                  <Route exact path="/posts" Component={Posts} />
                 </Route>
               </Routes>
             </section>
