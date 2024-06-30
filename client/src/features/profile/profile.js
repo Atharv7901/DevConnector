@@ -6,6 +6,7 @@ const initialState = {
   repos: [],
   loading: true,
   error: {},
+  viewProfile: null,
 };
 
 const profileSlice = createSlice({
@@ -39,6 +40,10 @@ const profileSlice = createSlice({
       state.repos = action.payload;
       state.loading = false;
     },
+    getViewProfile: (state, action) => {
+      state.viewProfile = action.payload;
+      state.loading = false;
+    },
   },
 });
 
@@ -49,6 +54,7 @@ export const {
   updateProfile,
   getProfiles,
   getRepos,
+  getViewProfile,
 } = profileSlice.actions;
 
 export default profileSlice.reducer;
