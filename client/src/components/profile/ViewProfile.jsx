@@ -8,6 +8,7 @@ import ProfileTop from "./ProfileTop";
 import ProfileAbout from "./ProfileAbout";
 import ProfileExperience from "./ProfileExperience";
 import ProfileEducation from "./ProfileEducation";
+import ProfileGithub from "./ProfileGithub";
 
 const ViewProfile = (props) => {
   const {id} = useParams();
@@ -72,6 +73,10 @@ const ViewProfile = (props) => {
                 <h4>No Education Found</h4>
               )}
             </div>
+
+            {viewProfile.githubusername && (
+              <ProfileGithub username={viewProfile.githubusername} />
+            )}
           </div>
         </Fragment>
       )}
