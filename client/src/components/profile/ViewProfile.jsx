@@ -4,6 +4,7 @@ import {useGetProfileByIDQuery} from "../../services/profile/profileService";
 import {useDispatch, useSelector} from "react-redux";
 import {getViewProfile} from "../../features/profile/profile";
 import Spinner from "../layout/Spinner";
+import ProfileTop from "./ProfileTop";
 
 const ViewProfile = (props) => {
   const {id} = useParams();
@@ -34,6 +35,9 @@ const ViewProfile = (props) => {
                 Edit Profile
               </Link>
             )}
+          <div className="profile-grid my-1">
+            <ProfileTop profile={viewProfile} />
+          </div>
         </Fragment>
       )}
     </Fragment>
