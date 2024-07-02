@@ -5,7 +5,7 @@ import {
   useAddLikeMutation,
   useRemoveLikesMutation,
 } from "../../services/post/postService";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {updateLikes} from "../../features/post/post";
 import {setAlert} from "../../features/alerts/alert";
 
@@ -14,6 +14,7 @@ const PostItem = (props) => {
   const dispatch = useDispatch();
   const [addLike, responseLikePost] = useAddLikeMutation();
   const [removeLike, responseRemoveLike] = useRemoveLikesMutation();
+  const [localLikes, setLocalLikes] = useState(props.post.likes.length);
 
   useEffect(() => {
     if (responseLikePost.isSuccess) {
@@ -24,6 +25,7 @@ const PostItem = (props) => {
         })
       );
       dispatch(setAlert({msg: "Liked Post!", alertType: "success"}));
+      setLocalLikes(responseLikePost.data.length);
     } else if (responseLikePost.isError) {
       dispatch(
         setAlert({msg: responseLikePost.error.data.msg, alertType: "danger"})
@@ -45,6 +47,7 @@ const PostItem = (props) => {
         })
       );
       dispatch(setAlert({msg: "Disliked post!", alertType: "success"}));
+      setLocalLikes(responseRemoveLike.data.length);
     } else if (responseRemoveLike.isError) {
       dispatch(
         setAlert({msg: responseRemoveLike.error.data.msg, alertType: "danger"})
@@ -74,11 +77,7 @@ const PostItem = (props) => {
           onClick={(e) => likePost(e)}
         >
           <i className="fas fa-thumbs-up" />{" "}
-          <span>
-            {props.post.likes.length > 0 && (
-              <span>{props.post.likes.length}</span>
-            )}
-          </span>
+          <span>{localLikes > 0 && <span>{localLikes}</span>}</span>
         </button>
         <button
           onClick={(e) => handleDislike(e)}
