@@ -43,7 +43,6 @@ const Register = () => {
       setSkipLoadUser(false);
     } else if (responseRegisterUser.isError) {
       dispatch(registerFail());
-      console.log(responseRegisterUser);
       if (responseRegisterUser.error) {
         responseRegisterUser.error.data.errors.map((value, index) => {
           dispatch(setAlert({msg: value.msg, alertType: "danger"}));
@@ -55,12 +54,10 @@ const Register = () => {
     if (isAuthenticated && !skipLoadUser) {
       userData.refetch().then((result) => {
         if (result.isSuccess) {
-          console.log("inside dispatch", result.data);
           dispatch(userLoaded(result.data));
           navigate("/dashboard");
         } else if (result.isError) {
           // Handle error if needed
-          console.error("Failed to refetch user data:", result.error);
         }
       });
     }
