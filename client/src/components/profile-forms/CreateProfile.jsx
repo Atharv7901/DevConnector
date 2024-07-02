@@ -60,7 +60,6 @@ const CreateProfile = () => {
 
   const submitData = (e) => {
     e.preventDefault();
-    console.log("eee", formData);
     createProfile(formData);
   };
   return (
