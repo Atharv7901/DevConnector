@@ -28,7 +28,6 @@ const PostItem = (props) => {
       dispatch(
         setAlert({msg: responseLikePost.error.data.msg, alertType: "danger"})
       );
-      console.log("errpr", responseLikePost);
     }
   }, [responseLikePost]);
 

@@ -10,7 +10,6 @@ const ProfileGithub = (props) => {
   const repos = useSelector((state) => state.profile.repos);
 
   useEffect(() => {
-    console.log("this is the data", githubRepos);
     if (githubRepos.isSuccess) {
       dispatch(getRepos(githubRepos.data));
     } else if (githubRepos.isError) {
