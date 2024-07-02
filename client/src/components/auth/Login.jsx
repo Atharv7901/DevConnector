@@ -30,7 +30,6 @@ const Login = () => {
 
   const onLogin = (e) => {
     e.preventDefault();
-    console.log("Logged in user", formData);
     loginUser(formData);
   };
 
@@ -58,12 +57,10 @@ const Login = () => {
     if (isAuthenticated && !skipLoadUser) {
       userData.refetch().then((result) => {
         if (result.isSuccess) {
-          console.log("inside dispatch", result.data);
           dispatch(userLoaded(result.data));
           navigate("/dashboard");
         } else if (result.isError) {
           // Handle error if needed
-          console.error("Failed to refetch user data:", result.error);
         }
       });
     }
