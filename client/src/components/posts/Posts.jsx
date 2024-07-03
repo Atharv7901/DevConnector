@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getPosts, postError} from "../../features/post/post";
 import Spinner from "../layout/Spinner";
 import PostItem from "./PostItem";
+import PostForm from "./PostForm";
 
 const Posts = () => {
   const [skipPosts, setSkipPosts] = useState(true);
@@ -36,7 +37,7 @@ const Posts = () => {
       <p className="lead">
         <i className="fas fa-user"></i> Welcome to the community
       </p>
-      {/* Post create */}
+      <PostForm />
       <div className="posts">
         {posts.map((post) => (
           <PostItem key={post._id} post={post} />
