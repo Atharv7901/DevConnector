@@ -36,8 +36,18 @@ export const postApi = createApi({
         body: data,
       }),
     }),
+    deletePost: builder.mutation({
+      query: (data) => ({
+        url: `/posts/${data.id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
-export const {useGetAllPostsQuery, useAddLikeMutation, useRemoveLikesMutation} =
-  postApi;
+export const {
+  useGetAllPostsQuery,
+  useAddLikeMutation,
+  useRemoveLikesMutation,
+  useDeletePostMutation,
+} = postApi;
