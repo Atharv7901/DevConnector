@@ -42,6 +42,16 @@ export const postApi = createApi({
         method: "DELETE",
       }),
     }),
+    createPost: builder.mutation({
+      query: (data) => ({
+        url: "/posts",
+        method: "POST",
+        body: data,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    }),
   }),
 });
 
@@ -50,4 +60,5 @@ export const {
   useAddLikeMutation,
   useRemoveLikesMutation,
   useDeletePostMutation,
+  useCreatePostMutation,
 } = postApi;
