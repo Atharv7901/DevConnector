@@ -4,9 +4,10 @@ import {Link} from "react-router-dom";
 import {
   useAddLikeMutation,
   useRemoveLikesMutation,
+  useDeletePostMutation,
 } from "../../services/post/postService";
 import {useEffect, useState} from "react";
-import {updateLikes} from "../../features/post/post";
+import {updateLikes, deletePost} from "../../features/post/post";
 import {setAlert} from "../../features/alerts/alert";
 
 const PostItem = (props) => {
@@ -14,6 +15,7 @@ const PostItem = (props) => {
   const dispatch = useDispatch();
   const [addLike, responseLikePost] = useAddLikeMutation();
   const [removeLike, responseRemoveLike] = useRemoveLikesMutation();
+  const [deletePosts, responseDeletePost] = useDeletePostMutation();
   const [localLikes, setLocalLikes] = useState(props.post.likes.length);
 
   useEffect(() => {
@@ -59,6 +61,19 @@ const PostItem = (props) => {
     e.preventDefault();
     removeLike({postID: props.post._id});
   };
+
+  useEffect(() => {
+    if (responseDeletePost.isSuccess) {
+      dispatch(deletePost(props.post._id));
+      dispatch(setAlert({msg: "Delete Post!", alertType: "danger"}));
+    }
+  }, [responseDeletePost]);
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    console.log("this is the deleteed", props.post._id);
+    deletePosts({id: props.post._id});
+  };
   return (
     <div className="post bg-white p-1 my-1">
       <div>
@@ -93,7 +108,11 @@ const PostItem = (props) => {
           )}
         </Link>
         {!auth.loading && props.post.user === auth.user._id && (
-          <button type="button" className="btn btn-danger">
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={(e) => handleDelete(e)}
+          >
             <i className="fas fa-times" />
           </button>
         )}
