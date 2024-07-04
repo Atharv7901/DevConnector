@@ -39,10 +39,30 @@ const postSlice = createSlice({
       state.posts = [action.payload, ...state.posts];
       state.loading = false;
     },
+    addComment: (state, action) => {
+      state.post = {...state.post, comments: action.payload};
+      state.loading = false;
+    },
+    removeComment: (state, action) => {
+      state.post = {
+        ...state.post,
+        comments: state.post.comments.filter(
+          (comment) => comment._id !== action.payload
+        ),
+      };
+    },
   },
 });
 
-export const {getPosts, postError, updateLikes, deletePost, addPost, getPost} =
-  postSlice.actions;
+export const {
+  getPosts,
+  postError,
+  updateLikes,
+  deletePost,
+  addPost,
+  getPost,
+  addComment,
+  removeComment,
+} = postSlice.actions;
 
 export default postSlice.reducer;
