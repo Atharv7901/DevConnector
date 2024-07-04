@@ -79,6 +79,7 @@ const PostItem = (props) => {
       <div>
         <Link to={`/profile/${props.post.user}`}>
           <img className="round-img" src={props.post.avatar} alt="postAvatar" />
+          <h4>{props.post.name}</h4>
         </Link>
       </div>
       <div>
