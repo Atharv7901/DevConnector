@@ -5,8 +5,8 @@ const cors = require("cors");
 const path = require("path");
 const {fileURLToPath} = require("url");
 
-const __filename = fileURLToPath(require.main.filename);
-const __dirname = path.dirname(__filename);
+const __fillename = fileURLToPath(require.main.filename);
+const __dirrname = path.dirname(__fillename);
 
 const app = express();
 
@@ -26,9 +26,9 @@ app.use("/api/profile", require("./routes/api/profile"));
 app.use("/api/auth", require("./routes/api/auth"));
 
 //client
-app.use(express.static(path.join(__dirname, "/client/dist")));
+app.use(express.static(path.join(__dirrname, "/client/dist")));
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "/client/dist/index.html"));
+  res.sendFile(path.join(__dirrname, "/client/dist/index.html"));
 });
 
 const PORT = process.env.PORT || 8000;
