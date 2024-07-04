@@ -7,6 +7,7 @@ import Spinner from "../layout/Spinner";
 import PostItem from "../posts/PostItem";
 import Moment from "react-moment";
 import CommentForm from "./CommentForm";
+import CommentItem from "./CommentItem";
 
 const Post = () => {
   const {id} = useParams();
@@ -43,6 +44,13 @@ const Post = () => {
             </div>
           </div>
           <CommentForm post={post} />
+          {post.comments.map((comment) => (
+            <CommentItem
+              key={comment._id}
+              comment={comment}
+              postID={post._id}
+            />
+          ))}
         </>
       )}
     </Fragment>
