@@ -15,6 +15,10 @@ const postSlice = createSlice({
       state.posts = action.payload;
       state.loading = false;
     },
+    getPost: (state, action) => {
+      state.post = action.payload;
+      state.loading = false;
+    },
     postError: (state, action) => {
       state.error = action.payload;
       state.loading = false;
@@ -38,7 +42,7 @@ const postSlice = createSlice({
   },
 });
 
-export const {getPosts, postError, updateLikes, deletePost, addPost} =
+export const {getPosts, postError, updateLikes, deletePost, addPost, getPost} =
   postSlice.actions;
 
 export default postSlice.reducer;
