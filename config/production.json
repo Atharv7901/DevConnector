@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://atharvshivarkar:atharvshivarkar@cluster0.bz8fe1e.mongodb.net/test?retryWrites=true",
+  "jwtToken": "atharvIsBest",
+  "githubClientId": "Ov23ctfQSh0PieDfZFkt",
+  "githubSecret": "5d23097fad97b79d91f04302848caf5aa0ce10b9"
+}
