@@ -6,6 +6,7 @@ import {getPost} from "../../features/post/post";
 import Spinner from "../layout/Spinner";
 import PostItem from "../posts/PostItem";
 import Moment from "react-moment";
+import CommentForm from "./CommentForm";
 
 const Post = () => {
   const {id} = useParams();
@@ -41,6 +42,7 @@ const Post = () => {
               </p>
             </div>
           </div>
+          <CommentForm post={post} />
         </>
       )}
     </Fragment>
