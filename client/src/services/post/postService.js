@@ -52,6 +52,12 @@ export const postApi = createApi({
         },
       }),
     }),
+    getPostByID: builder.query({
+      query: (data) => ({
+        url: `/posts/${data.postID}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -61,4 +67,5 @@ export const {
   useRemoveLikesMutation,
   useDeletePostMutation,
   useCreatePostMutation,
+  useGetPostByIDQuery,
 } = postApi;
