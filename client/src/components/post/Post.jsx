@@ -11,13 +11,23 @@ import CommentItem from "./CommentItem";
 
 const Post = () => {
   const {id} = useParams();
-  const currentPost = useGetPostByIDQuery({postID: id});
+  const [skipPost, setSkipPost] = useState(true);
+  const currentPost = useGetPostByIDQuery({postID: id}, {skip: skipPost});
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getPost(currentPost.data));
-  }, [currentPost]);
+    setSkipPost(false);
+  }, []);
 
+  useEffect(() => {
+    if (!skipPost) {
+      currentPost.refetch().then((result) => {
+        if (result.isSuccess) {
+          dispatch(getPost(result.data));
+        }
+      });
+    }
+  }, [skipPost]);
   const post = useSelector((state) => state.post.post);
   const loading = useSelector((state) => state.post.loading);
   return post === null || loading ? (
