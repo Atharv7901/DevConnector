@@ -58,6 +58,22 @@ export const postApi = createApi({
         method: "GET",
       }),
     }),
+    addComment: builder.mutation({
+      query: (data) => ({
+        url: `/posts/comment/${data.postID}`,
+        method: "POST",
+        body: data,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    }),
+    removeComment: builder.mutation({
+      query: (data) => ({
+        url: `/posts/comments/${data.postID}/${data.commentID}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -68,4 +84,6 @@ export const {
   useDeletePostMutation,
   useCreatePostMutation,
   useGetPostByIDQuery,
+  useAddCommentMutation,
+  useRemoveCommentMutation,
 } = postApi;
