@@ -70,7 +70,7 @@ export const postApi = createApi({
     }),
     removeComment: builder.mutation({
       query: (data) => ({
-        url: `/posts/comments/${data.postID}/${data.commentID}`,
+        url: `/posts/comment/${data.postID}/${data.commentID}`,
         method: "DELETE",
       }),
     }),
